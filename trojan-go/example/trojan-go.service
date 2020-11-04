@@ -7,7 +7,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 User=root
-ExecStart=/data/trojan/trojan-go/trojan-go -config /data/trojan/server.json
+ExecStart=/data/trojan/trojan-go/trojan-go -config /data/trojan/trojan-go/server.json
 Restart=on-failure
 RestartSec=10
 RestartPreventExitStatus=23
