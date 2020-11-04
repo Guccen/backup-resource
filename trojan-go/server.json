@@ -35,11 +35,11 @@
     },
     "mysql": {
         "enabled": true,
-        "server_addr": "mysql_server",
-        "server_port": mysql_port,
-        "database": "mysql_database",
-        "username": "mysql_username",
-        "password": "mysql_password",
+        "mysql_server": "mysql_server",
+        "mysql_port": mysql_port,
+        "mysql_database": "mysql_database",
+        "mysql_username": "mysql_username",
+        "mysql_password": "mysql_password",
         "check_rate": 60,
 		"node_id": node_id
     },
