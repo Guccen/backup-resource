@@ -22,6 +22,18 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[Error]${Font}"
 Notification="${Yellow}[Notification]${Font}"
 
+get_ip(){
+	ip=$(curl -s https://ipinfo.io/ip)
+	[[ -z $ip ]] && ip=$(curl -s https://api.ip.sb/ip)
+	[[ -z $ip ]] && ip=$(curl -s https://api.ipify.org)
+	[[ -z $ip ]] && ip=$(curl -s https://ip.seeip.org)
+	[[ -z $ip ]] && ip=$(curl -s https://ifconfig.co/ip)
+	[[ -z $ip ]] && ip=$(curl -s https://api.myip.com | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
+	[[ -z $ip ]] && ip=$(curl -s icanhazip.com)
+	[[ -z $ip ]] && ip=$(curl -s myip.ipip.net | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
+	[[ -z $ip ]] && echo -e "\n 这小鸡鸡还是割了吧！\n" && exit
+}
+
 #检测系统
 check_system(){
 	clear
@@ -77,9 +89,10 @@ install_trojan(){
 	check_port
 	#开始处理对接信息
 	clear
-	read -p "请输入绑定域名(例如:www.baidu.com): " DOMAIN_URL
+	get_ip
+	read -p "请输入绑定域名(例如:www.baidu.com)[华为云解析不可用]: " DOMAIN_URL
 	Ping_URL=`ping ${DOMAIN_URL} -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`
-    Curl_URL=`curl ipv4.icanhazip.com`
+    Curl_URL="${ip}"
 	if [ $Ping_URL != $Curl_URL ] ; then
 	echo -e "检测到域名未解析或解析未生效，无法搭建。"
 	exit 0;
